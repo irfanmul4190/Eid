@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 text: name || 'Team Enfactum',
                 fontfile: fontPath,
                 fontsize: 60,
-                fontcolor: 'white',
+                fontcolor: 'black',
                 x: '(w-text_w)/2',
                 y: 'h-(h*0.1)-th' 
             }
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
             // Once baking is finished, read the file and send it
             const videoBuffer = fs.readFileSync(outputPath);
             res.setHeader('Content-Type', 'video/mp4');
-            res.setHeader('Content-Disposition', `attachment; filename="Enfactum_${name}.mp4"`);
+            res.setHeader('Content-Disposition', `attachment; filename="MF_${name}.mp4"`);
             res.send(videoBuffer);
             
             // Clean up the temp file
