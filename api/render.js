@@ -21,7 +21,7 @@ export default async function handler(req, res) {
                 fontsize: 60,
                 fontcolor: 'black',
                 x: '(w-text_w)/2',
-                y: 'h-(h*0.1)-th' 
+                y: 'h-(h*0.05)-th' 
             }
         })
         .format('mp4')
