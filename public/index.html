@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfactum Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+
+    <div id="ui-container">
+        <h2 style="color: white; font-family: sans-serif;">Enfactum Card Creator</h2>
+        <input type="text" id="employeeName" placeholder="Type name here...">
+        <button id="recordBtn">Personalize & Download</button>
+    </div>
+
+    <canvas id="recorderCanvas" width="1080" height="1350"></canvas>
+
+    <video id="baseVideo" style="display:none;" muted playsinline>
+        <source src="assets/Eid.mp4" type="video/mp4">
+    </video>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

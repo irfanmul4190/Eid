@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'EnfactumFont';
+    src: url('assets/font.ttf'); /* Ensure this matches your file name exactly */
+}
+body {
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#ui-container {
+    margin-bottom: 20px;
+    z-index: 10; /* Ensures buttons are on top */
+}
+
+canvas {
+    border: 2px solid #ed1c24;
+    max-width: 400px; /* This shrinks the view so you can see the buttons */
+    height: auto;
+    background: #000;
+}
