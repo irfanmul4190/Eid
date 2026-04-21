@@ -1,45 +1,37 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg = require('fluent-ffmpeg');
+const sharp = require('sharp');
 const path = require('path');
-const fs = require('fs'); // Added to handle temporary files
-ffmpeg.setFfmpegPath(ffmpegPath);
 
 export default async function handler(req, res) {
     const { name } = req.query;
-    const videoPath = path.resolve(process.cwd(), 'public', 'assets', 'Eid.mp4');
-    const fontPath = path.resolve(process.cwd(), 'public', 'assets', 'font.ttf');
     
-    // Vercel allows writing to the /tmp folder
-    const outputPath = path.join('/tmp', `Enfactum_${Date.now()}.mp4`);
+    // 1. Path to your static A5 design
+    const imagePath = path.resolve(process.cwd(), 'public', 'assets', 'EidCard.png');
 
-    ffmpeg(videoPath)
-        .videoFilters({
-            filter: 'drawtext',
-            options: {
-                text: name || 'Team Enfactum',
-                fontfile: fontPath,
-                fontsize: 60,
-                fontcolor: 'black',
-                x: '(w-text_w)/2',
-                y: 'h-(h*0.05)-th' 
-            }
-        })
-        .format('mp4')
-        .videoCodec('libx264')
-        .outputOptions('-preset ultrafast')
-        .on('error', (err, stdout, stderr) => {
-            console.error('FFmpeg Error:', stderr);
-            res.status(500).send('Error baking video');
-        })
-        .on('end', () => {
-            // Once baking is finished, read the file and send it
-            const videoBuffer = fs.readFileSync(outputPath);
-            res.setHeader('Content-Type', 'video/mp4');
-            res.setHeader('Content-Disposition', `attachment; filename="MF_${name}.mp4"`);
-            res.send(videoBuffer);
-            
-            // Clean up the temp file
-            fs.unlinkSync(outputPath);
-        })
-        .save(outputPath); // Save to temp storage first
+    // 2. Define the text overlay as an SVG (Best for high-quality printing)
+    // A5 at 300 DPI is roughly 1748 x 2480 pixels
+    const svgOverlay = `
+        <svg width="1748" height="2480">
+            <style>
+                .name { fill: black; font-size: 80px; font-family: serif; font-style: italic; }
+            </style>
+            <text x="50%" y="95%" text-anchor="middle" class="name">${name || ''}</text>
+        </svg>`;
+
+    try {
+        const image = await sharp(imagePath)
+            .composite([{
+                input: Buffer.from(svgOverlay),
+                top: 0,
+                left: 0
+            }])
+            .png() // Keep it high quality
+            .toBuffer();
+
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Content-Disposition', 'attachment; filename="Eid_Card.png"');
+        res.send(image);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error creating card");
+    }
 }
