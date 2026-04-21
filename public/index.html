@@ -3,21 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enfactum Card Generator - Static A5</title>
+    <title>Summit Card Generator</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensuring the UI is readable over the background */
+        #ui-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
 
     <div id="ui-container">
-        <h2 style="color: white; font-family: sans-serif;">Enfactum Card Creator</h2>
-        <p style="color: #ccc; font-family: sans-serif; font-size: 14px;">Static A5 Print Version</p>
-        <input type="text" id="employeeName" placeholder="Type name here...">
+        <h2 style="color: white; font-family: sans-serif;">Summit Card Creator</h2>
+        
+        <input type="text" id="employeeName" placeholder="Enter Full Name...">
+        <input type="text" id="subText" placeholder="Enter Designation (ALL CAPS)...">
+        
+        <div style="text-align: left; color: white; font-family: sans-serif; font-size: 14px;">
+            <label for="logoUpload">Upload Secondary Logo:</label>
+            <input type="file" id="logoUpload" accept="image/*">
+        </div>
+
         <button id="recordBtn">Personalize & Download</button>
     </div>
 
-    <canvas id="recorderCanvas" width="1748" height="2480"></canvas>
-
-    <img id="baseImage" src="assets/EidCard.png" style="display:none;" alt="Card Template">
+    <img id="baseImage" src="assets/EidCard.jpg" style="display:none;" alt="Card Template">
+    
+    <canvas id="recorderCanvas" style="max-width: 100%; height: auto; border: 1px solid #ccc;"></canvas>
 
     <script src="script.js"></script>
 </body>
