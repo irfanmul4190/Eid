@@ -1,7 +1,13 @@
 {
+  "name": "enfactum-card-creator",
+  "version": "1.0.0",
+  "description": "Static Card Generator",
+  "main": "api/render.js",
   "dependencies": {
-    "express": "^4.18.2",
-    "fluent-ffmpeg": "^2.1.2",
-    "@ffmpeg-installer/ffmpeg": "^1.1.0"
+    "sharp": "^0.33.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node api/render.js"
   }
 }
